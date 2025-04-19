@@ -10,5 +10,9 @@ def hello_world():
 def hello():
     return render_template('index.html')
 
+@app.route('/king')
+def king():
+    return render_template('king.html')
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -27,7 +27,6 @@ def hello():
     rows = curs.fetchall()
     for row in rows:
         print(row)
-
     return render_template('test.html', value = rows)
 
 @app.route("/login") #로그인 기능

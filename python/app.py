@@ -6,14 +6,15 @@ app = Flask(__name__)
 conn = pymysql.connect(
     host = 'localhost',
     user = 'root',
-    password = '1004',
+    password = '1234',
     db = 'study_db',
     charset = 'utf8'
 )
 
 @app.route("/")  # 기본 홈페이지
 def hello_world():
-    return "<h1>테스트 성공!!</h1>"
+    return render_template('index.html')
+#return "<h1>테스트 성공!!</h1>"
 
 @app.route('/test')  # 테스트
 def hello():
@@ -23,21 +24,11 @@ def hello():
     rows = curs.fetchall()
     for row in rows:
         print(row)
-<<<<<<< HEAD
-    return render_template('test.html', value = rows)
-
-@app.route("/login") #로그인 기능
-=======
     return render_template('test.html', value=rows)
 
 @app.route("/login")  # 로그인 기능
->>>>>>> 608ba8c70df86728a4dfd974498d4d2be8755498
 def login():
     return "<h1>작업중입니다.</h1>"
-
-@app.route('/index')
-def king():
-    return render_template('index.html')  
 
 @app.route('/login-enter')
 def coupang():

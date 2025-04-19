@@ -11,11 +11,11 @@ conn = pymysql.connect(
     charset = 'utf8'
 )
 
-@app.route("/")
+@app.route("/") #기본 홈페이지
 def hello_world():
     return "<h1>테스트 성공!!</h1>"
 
-@app.route('/test')
+@app.route('/test') #테스트
 def hello():
     curs = conn.cursor()
 
@@ -28,7 +28,11 @@ def hello():
     for row in rows:
         print(row)
 
-    return render_template('test.html', value = row)
+    return render_template('test.html', value = rows)
+
+@app.route("/login") #로그인 기능
+def login():
+    return "<h1>작업중입니다.</h1>"
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -6,7 +6,7 @@ app = Flask(__name__)
 conn = pymysql.connect(
     host = 'localhost',
     user = 'root',
-    password = '1234',
+    password = '1004',
     db = 'study_db',
     charset = 'utf8'
 )
@@ -34,7 +34,11 @@ def login():
 def coupang():
     return render_template('login-enter.html')
 
+@app.route("/join-membership")
+def join():
+    return render_template("join-membership.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
 
-conn.close()

@@ -6,7 +6,7 @@ app = Flask(__name__)
 conn = pymysql.connect(
     host = 'localhost',
     user = 'root',
-    password = '1234',
+    password = '1004',
     db = 'study_db',
     charset = 'utf8'
 )
@@ -14,7 +14,7 @@ conn = pymysql.connect(
 @app.route("/")  # 기본 홈페이지
 def hello_world():
     return render_template('index.html')
-#return "<h1>테스트 성공!!</h1>"
+
 
 @app.route('/test')  # 테스트
 def hello():

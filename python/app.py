@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect
 import pymysql
 
 app = Flask(__name__)
@@ -18,12 +18,16 @@ def hello_world():
 
 @app.route('/test')  # 테스트
 def hello():
-    curs = conn.cursor()
-    sql = "SELECT * FROM customers"
-    curs.execute(sql)
-    rows = curs.fetchall()
-    for row in rows:
-        print(row)
+    try :
+        curs = conn.cursor()
+        sql = "SELECT * FROM customers"
+        curs.execute(sql)
+        rows = curs.fetchall()
+        for row in rows:
+            print(row)
+    finally:
+        curs.close()
+        conn.close()
     return render_template('test.html', value=rows)
 
 @app.route("/login")  # 로그인 기능
@@ -34,11 +38,31 @@ def login():
 def login_enter():
     return render_template('login-enter.html')
 
-@app.route("/join-membership" , methods=['GET', 'POST'])
+@app.route("/join-membership" , methods=['GET', 'POST']) #회원가입 페이지(기능 구현중)
 def join():
     if request.method == 'POST':
-        id = request.form['id'] #html파일 속 name값을 가져옴
-        pw = request.form['pw']
+        
+        try:
+            #html파일 속 name값을 가져옴
+            name = request.form['name']
+            gender = request.form['gender']
+            id = request.form['id']
+            pw = request.form['pw']
+
+            curs = conn.cursor()
+            sql = "INSERT INTO Customers (Username, Gender, LoginID, Password)\
+                    VALUES ('%s', '%s', '%s', '%s')" % (name, gender, id, pw)
+            curs.execute(sql)
+            data = curs.fetchall()
+            if not data:
+               conn.commit()
+               return "회원가입 성공!"
+            else:
+                conn.rollback()
+                return "회원가입 실패"
+        finally:
+            curs.close()
+            conn.close()    
     return render_template("join-membership.html")
 
 @app.route("/index")

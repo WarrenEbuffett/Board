@@ -11,10 +11,11 @@ conn = pymysql.connect(
     charset = 'utf8'
 )
 
+#conn.close()
+
 @app.route("/")  # 기본 홈페이지
 def hello_world():
     return render_template('index.html')
-
 
 @app.route('/test')  # 테스트
 def hello():
@@ -53,12 +54,12 @@ def join():
         data = curs.fetchall()
         if not data:
             conn.commit()
+            curs.close()
             return "회원가입 성공!"
         else:
             conn.rollback()
+            curs.close()
             return "회원가입 실패"
-        #curs.close()
-        #conn.close()    
     return render_template("join-membership.html")
 
 @app.route("/index")

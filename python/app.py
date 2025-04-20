@@ -41,7 +41,7 @@ def login_enter():
 @app.route("/join-membership" , methods=['GET', 'POST']) #회원가입 페이지(기능 구현중)
 def join():
     if request.method == 'POST':
-        
+        #https://yong0810.tistory.com/4 참고 자료
         try:
             #html파일 속 name값을 가져옴
             name = request.form['name']

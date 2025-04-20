@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, request, url_for
 import pymysql
 
 app = Flask(__name__)
@@ -34,13 +34,12 @@ def login():
 def login_enter():
     return render_template('login-enter.html')
 
-@app.route("/join-membership")
+@app.route("/join-membership" , methods=['GET', 'POST'])
 def join():
+    if request.method == 'POST':
+        id = request.form['id'] #html파일 속 name값을 가져옴
+        pw = request.form['pw']
     return render_template("join-membership.html")
-
-@app.route("/register")
-def register():
-    return "<h1>작업중입니다.123</h1>"
 
 @app.route("/index")
 def index():

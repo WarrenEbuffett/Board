@@ -6,7 +6,7 @@ app = Flask(__name__)
 conn = pymysql.connect(
     host = 'localhost',
     user = 'root',
-    password = '1004',
+    password = '1234',
     db = 'study_db',
     charset = 'utf8'
 )
@@ -18,16 +18,14 @@ def hello_world():
 
 @app.route('/test')  # 테스트
 def hello():
-    try :
-        curs = conn.cursor()
-        sql = "SELECT * FROM customers"
-        curs.execute(sql)
-        rows = curs.fetchall()
-        for row in rows:
-            print(row)
-    finally:
-        curs.close()
-        conn.close()
+    curs = conn.cursor()
+    sql = "SELECT * FROM customers"
+    curs.execute(sql)
+    rows = curs.fetchall()
+    for row in rows:
+        print(row)
+    #curs.close()
+    #conn.close()
     return render_template('test.html', value=rows)
 
 @app.route("/login")  # 로그인 기능
@@ -42,27 +40,25 @@ def login_enter():
 def join():
     if request.method == 'POST':
         #https://yong0810.tistory.com/4 참고 자료
-        try:
-            #html파일 속 name값을 가져옴
-            name = request.form['name']
-            gender = request.form['gender']
-            id = request.form['id']
-            pw = request.form['pw']
+        #html파일 속 name값을 가져옴
+        name = request.form['name']
+        gender = request.form['gender']
+        id = request.form['id']
+        pw = request.form['pw']
 
-            curs = conn.cursor()
-            sql = "INSERT INTO Customers (Username, Gender, LoginID, Password)\
-                    VALUES ('%s', '%s', '%s', '%s')" % (name, gender, id, pw)
-            curs.execute(sql)
-            data = curs.fetchall()
-            if not data:
-               conn.commit()
-               return "회원가입 성공!"
-            else:
-                conn.rollback()
-                return "회원가입 실패"
-        finally:
-            curs.close()
-            conn.close()    
+        curs = conn.cursor()
+        sql = "INSERT INTO Customers (Username, Gender, LoginID, Password)\
+                VALUES ('%s', '%s', '%s', '%s')" % (name, gender, id, pw)
+        curs.execute(sql)
+        data = curs.fetchall()
+        if not data:
+            conn.commit()
+            return "회원가입 성공!"
+        else:
+            conn.rollback()
+            return "회원가입 실패"
+        #curs.close()
+        #conn.close()    
     return render_template("join-membership.html")
 
 @app.route("/index")

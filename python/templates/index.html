@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
-
+    <!--⭐⭐⭐url_for() 함수 : Flask에서 URL 경로를 자동으로 생성해주는 함수입니다.-->
+    <!--정적 파일(static files) : 서버에서 처리되지 않고, 그대로 브라우저에 전달되는 파일. 예시:CSS,JavaScript,이미지 (JPG, PNG, SVG),글꼴(Font),동영상 파일 등-->
+    <!--filename='index.css'는 그 static(엔드포인트)에 넘겨주는 **키워드 인자(매개변수)**입니다.
+        Flask 내부적으로 static 경로를 처리할 때
+        filename이라는 이름으로 static 폴더 안에서 찾을 파일 경로를 지정하게 되어 있어요.
+    -->
 </head>
 
 <body>

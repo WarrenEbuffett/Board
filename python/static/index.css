@@ -25,13 +25,18 @@ header{
     background:white;
     text-align:center;
     padding:20px 10px;
+    overflow: hidden; 
 
-    display:flex;
-    justify-content:center;
-    position:relative;
 }
 
-header .inner h1{
+header .header-inner{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    
+}
+
+header .header-inner h1{
     font-size:40px;
 }
 header .top-box{
@@ -39,7 +44,11 @@ header .top-box{
     top:20px;
     right:30px;
 }
-
+header .header-inner .bottom-box .bottom{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
 header .top-box .top li{
     float:left;
     margin-right:20px;
@@ -56,3 +65,4 @@ header .inner .bottom-box .bottom li{
 header .inner .bottom-box .bottom li a{
    font-size:30px;
 }
+

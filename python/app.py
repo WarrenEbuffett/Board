@@ -6,7 +6,7 @@ app = Flask(__name__)
 conn = pymysql.connect(
     host = 'localhost',
     user = 'root',
-    password = '1004',
+    password = '1234',
     db = 'study_db',
     charset = 'utf8'
 )
@@ -31,17 +31,20 @@ def login():
     return "<h1>작업중입니다.</h1>"
 
 @app.route('/login-enter')
-def coupang():
+def login_enter():
     return render_template('login-enter.html')
 
 @app.route("/join-membership")
 def join():
     return render_template("join-membership.html")
 
+@app.route("/register")
+def register():
+    return "<h1>작업중입니다.123</h1>"
+
 @app.route("/index")
 def index():
     return render_template("index.html")
-
 
 if __name__ == "__main__":
     app.run(debug=True)

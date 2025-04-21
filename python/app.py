@@ -4,10 +4,20 @@
 #Flask(__name__) : 지금 이 파일을 Flask 앱으로 등록한다 라는 뜻이에요.
 #실행 중인 현재 파일의 이름"**을 Flask에게 알려주는 역할을 해요.
 
-
 from flask import Flask, render_template, request, url_for, redirect
-import pymysql
+from flaskext.mysql import MySQL #아마 이 부분 오류 뜰 텐데 터미널 창에 pip install Flask-MySQL 입력하면 오류 사라질거임
 
+mysql = MySQL()
+app = Flask(__name__)
+ 
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
+app.config['MYSQL_DATABASE_DB'] = 'study_db'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.secret_key = "ABCDEFG"
+mysql.init_app(app)
+
+"""
 app = Flask(__name__) #Flask 앱을 하나 만들어서, 여기에 라우팅, 데이터 처리, 렌더링 같은 기능을 추가할 준비를 해놓는 코드입니다.
 
 conn = pymysql.connect(  #pymysql : Python이 MySQL 서버와 통신할 수 있도록 해주는 외부 라이브러리를 불러오는 거예요.
@@ -18,12 +28,11 @@ conn = pymysql.connect(  #pymysql : Python이 MySQL 서버와 통신할 수 있�
     db = 'study_db',     #사용할 데이터베이스 이름
     charset = 'utf8'     #한글 깨짐 방지용 문자 인코딩 설정
 )
-
-#conn.close()
-
+"""
                  #/는 루트 경로 (Root URL) 를 뜻함,웹사이트에서 /는 홈페이지, 메인화면 을 의미해요.
-@app.route("/")  #이건 사용자 브라우저에서 어떤 URL로 접속했을 때 어떤 페이지(함수)가 실행될지를 정하는 부분입니다.
-def hello_world(): #사용자가 /에 접속했을 때 실행될 함수 이름입니다. / 이름 마음대로 가능 /💡함수 이름은 중복되면 안 됨
+@app.route("/") # 메인 페이지
+#이건 사용자 브라우저에서 어떤 URL로 접속했을 때 어떤 페이지(함수)가 실행될지를 정하는 부분입니다.
+def home(): #사용자가 /에 접속했을 때 실행될 함수 이름입니다. / 이름 마음대로 가능 /💡함수 이름은 중복되면 안 됨
     return render_template('index.html') #Flask가 templates 폴더 안에 있는 index.html 파일을 찾아서,그걸 사용자에게 보여줍니다.
          #render(함수)_template(폴더)("index.html(파일)")"
          #render: Flask에서 HTML 파일을 브라우저에 보여줄 때 쓰는 함수예요. "렌더링하다", 즉 HTML을 브라우저가 볼 수 있게 바꿔주는 것
@@ -33,34 +42,25 @@ def hello_world(): #사용자가 /에 접속했을 때 실행될 함수 이름�
 #app.route("/")는 Flask에게 알려주는 거예요 : “누군가 웹 브라우저에서 / 주소(= 홈 주소)로 접속하면,아래 있는 함수를 실행시켜줘!”
 #즉, http://localhost:5000/ 이 주소로 접속하면 → hello_world() 함수 실행됨!
 
-
-
-
-@app.route('/test')  # 테스트
-def hello():
+@app.route('/test')  # 테스트 코드
+def test():
+    conn = mysql.connect()
     curs = conn.cursor()
     sql = "SELECT * FROM customers"
     curs.execute(sql)
     rows = curs.fetchall()
     for row in rows:
         print(row)
-    #curs.close()
-    #conn.close()
+    curs.close()
+    conn.close()
     return render_template('test.html', value=rows)
 
-
-
-@app.route("/login")  # 로그인 기능
-def login():
-    return "<h1>작업중입니다.</h1>"
-
-
-@app.route('/login-enter')
+@app.route('/login-enter') # 로그인 페이지
 def login_enter():
     return render_template('login-enter.html')
 
-@app.route("/join-membership" , methods=['GET', 'POST']) #회원가입 페이지(기능 구현중)
-def join():
+@app.route("/join-membership" , methods=['GET', 'POST']) #회원가입 페이지
+def join_membership():
     if request.method == 'POST':
         #https://yong0810.tistory.com/4 참고 자료
         #html파일 속 name값을 가져옴
@@ -69,6 +69,7 @@ def join():
         id = request.form['id']
         pw = request.form['pw']
 
+        conn = mysql.connect()
         curs = conn.cursor()
         sql = "INSERT INTO Customers (Username, Gender, LoginID, Password)\
                 VALUES ('%s', '%s', '%s', '%s')" % (name, gender, id, pw)
@@ -77,16 +78,14 @@ def join():
         if not data:
             conn.commit()
             curs.close()
+            conn.close()
             return "회원가입 성공!"
         else:
             conn.rollback()
             curs.close()
+            conn.close()
             return "회원가입 실패"
     return render_template("join-membership.html")
-
-@app.route("/index")
-def index():
-    return render_template("index.html")
 
 if __name__ == "__main__":  #“지금 이 파일이 직접 실행되고 있는 거라면, 아래 코드를 실행해라.”
     app.run(debug=True)   #조건이 참일 때 실행할 코드임

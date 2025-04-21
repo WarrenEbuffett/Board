@@ -14,7 +14,7 @@
 <body>
 
   <!-- ✅ 링크도 url_for 써야 안정적이에요 -->
-  <h1><a href="{{ url_for('index') }}">홈</a></h1>
+  <h1><a href="/">홈</a></h1>
 
   <div class="login-container">
     <h2>로그인</h2>
@@ -33,7 +33,7 @@
 
     <!-- 회원가입 페이지도 url_for로 이동 -->
     <button class="join-membership">
-      <a href="{{ url_for('join') }}">회원가입</a>
+      <a href="{{ url_for('join_membership') }}">회원가입</a>
     </button>
   </div>
 

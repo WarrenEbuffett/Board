@@ -35,8 +35,8 @@ conn = pymysql.connect(  #pymysql : Python이 MySQL 서버와 통신할 수 있�
 #이건 사용자 브라우저에서 어떤 URL로 접속했을 때 어떤 페이지(함수)가 실행될지를 정하는 부분입니다.
 def home(): #사용자가 /에 접속했을 때 실행될 함수 이름입니다. / 이름 마음대로 가능 /💡함수 이름은 중복되면 안 됨
     return render_template('index.html') #Flask가 templates 폴더 안에 있는 index.html 파일을 찾아서,그걸 사용자에게 보여줍니다.
-         #render(함수)_template(폴더)("index.html(파일)")"
-         #render: Flask에서 HTML 파일을 브라우저에 보여줄 때 쓰는 함수예요. "렌더링하다", 즉 HTML을 브라우저가 볼 수 있게 바꿔주는 것
+        #render(함수)_template(폴더)("index.html(파일)")"
+        #render: Flask에서 HTML 파일을 브라우저에 보여줄 때 쓰는 함수예요. "렌더링하다", 즉 HTML을 브라우저가 볼 수 있게 바꿔주는 것
 
 #@app.route("/")
 #@는 데코레이터라고 부르는 문법이고,
@@ -45,20 +45,12 @@ def home(): #사용자가 /에 접속했을 때 실행될 함수 이름입니다
 
 @app.route("/board") # 게시판 페이지
 def board():
-    return render_template('board.html')
-
-@app.route('/test')  # 테스트 코드
-def test():
     conn = mysql.connect()
     curs = conn.cursor()
-    sql = "SELECT * FROM customers"
+    sql = "SELECT * FROM board"
     curs.execute(sql)
-    rows = curs.fetchall()
-    for row in rows:
-        print(row)
-    curs.close()
-    conn.close()
-    return render_template('test.html', value=rows)
+    data = curs.fetchall()
+    return render_template('board.html', values=data)
 
 @app.route('/login_enter', methods=['GET', 'POST']) # 로그인 페이지
 def login_enter():
@@ -69,7 +61,7 @@ def login_enter():
 
         conn = mysql.connect()
         curs = conn.cursor()
-        sql = "SELECT * FROM Customers WHERE LoginId = ('%s')" % (id)
+        sql = "SELECT * FROM customers WHERE loginid = ('%s')" % (id)
         curs.execute(sql)
         data = curs.fetchall()
 
@@ -109,7 +101,7 @@ def join_membership():
 
         conn = mysql.connect()
         curs = conn.cursor()
-        sql = "INSERT INTO Customers (Username, Gender, LoginID, Password)\
+        sql = "INSERT INTO customers (username, gender, loginid, password)\
                 VALUES ('%s', '%s', '%s', '%s')" % (name, gender, id, pw)
         curs.execute(sql)
         data = curs.fetchall()
@@ -124,6 +116,19 @@ def join_membership():
             conn.close()
             return "회원가입 실패"
     return render_template("join_membership.html")
+
+@app.route('/test')  # 테스트 코드
+def test():
+    conn = mysql.connect()
+    curs = conn.cursor()
+    sql = "SELECT * FROM customers"
+    curs.execute(sql)
+    rows = curs.fetchall()
+    for row in rows:
+        print(row)
+    curs.close()
+    conn.close()
+    return render_template('test.html', value=rows)
 
 if __name__ == "__main__":  #“지금 이 파일이 직접 실행되고 있는 거라면, 아래 코드를 실행해라.”
     app.run(debug=True)   #조건이 참일 때 실행할 코드임

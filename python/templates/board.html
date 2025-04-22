@@ -6,7 +6,19 @@
     <title>게시판</title>
 </head>
 <body>
-    <h1>ddddd</h1>
-    <p>sdsds</p>
+    <h1>게시판</h1>
+    <p>작업중입니다</p>
+    {% for value in values %}
+    <tr>
+        <td>{{ value[0] }}</td><br>
+        <td>{{ value[1] }}</td><br>
+        <td>{{ value[2] }}</td><br>
+        <td>{{ value[3] }}</td><br>
+        <td>{{ value[4] }}</td><br>
+        <td>{{ value[5] }}</td><br>
+        <td>{{ value[6] }}</td><br>
+        <td>{{ value[7] }}</td><br>
+    </tr>
+    {% endfor %}
 </body>
 </html>

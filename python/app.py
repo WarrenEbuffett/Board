@@ -5,7 +5,7 @@
 #실행 중인 현재 파일의 이름"**을 Flask에게 알려주는 역할을 해요.
 
 from flask import Flask, render_template, request, url_for, redirect
-from flaskext.mysql import MySQL #아마 이 부분 오류 뜰 텐데 터미널 창에 pip install Flask-MySQL 입력하면 오류 사라질거임
+from flaskext.mysql import MySQL
 
 mysql = MySQL()
 app = Flask(__name__)
@@ -18,6 +18,7 @@ app.secret_key = "ABCDEFG"
 mysql.init_app(app)
 
 """
+기존 데이터베이스 연결 코드
 app = Flask(__name__) #Flask 앱을 하나 만들어서, 여기에 라우팅, 데이터 처리, 렌더링 같은 기능을 추가할 준비를 해놓는 코드입니다.
 
 conn = pymysql.connect(  #pymysql : Python이 MySQL 서버와 통신할 수 있도록 해주는 외부 라이브러리를 불러오는 거예요.
@@ -29,7 +30,7 @@ conn = pymysql.connect(  #pymysql : Python이 MySQL 서버와 통신할 수 있�
     charset = 'utf8'     #한글 깨짐 방지용 문자 인코딩 설정
 )
 """
-                 #/는 루트 경로 (Root URL) 를 뜻함,웹사이트에서 /는 홈페이지, 메인화면 을 의미해요.
+#/는 루트 경로 (Root URL) 를 뜻함,웹사이트에서 /는 홈페이지, 메인화면 을 의미해요.
 @app.route("/") # 메인 페이지
 #이건 사용자 브라우저에서 어떤 URL로 접속했을 때 어떤 페이지(함수)가 실행될지를 정하는 부분입니다.
 def home(): #사용자가 /에 접속했을 때 실행될 함수 이름입니다. / 이름 마음대로 가능 /💡함수 이름은 중복되면 안 됨
@@ -41,6 +42,10 @@ def home(): #사용자가 /에 접속했을 때 실행될 함수 이름입니다
 #@는 데코레이터라고 부르는 문법이고,
 #app.route("/")는 Flask에게 알려주는 거예요 : “누군가 웹 브라우저에서 / 주소(= 홈 주소)로 접속하면,아래 있는 함수를 실행시켜줘!”
 #즉, http://localhost:5000/ 이 주소로 접속하면 → hello_world() 함수 실행됨!
+
+@app.route("/board") # 게시판 페이지
+def board():
+    return render_template('board.html')
 
 @app.route('/test')  # 테스트 코드
 def test():
@@ -55,7 +60,7 @@ def test():
     conn.close()
     return render_template('test.html', value=rows)
 
-@app.route('/login-enter', methods=['GET', 'POST']) # 로그인 페이지
+@app.route('/login_enter', methods=['GET', 'POST']) # 로그인 페이지
 def login_enter():
     if request.method == 'POST':
         #html파일 속 name값을 가져옴
@@ -71,6 +76,7 @@ def login_enter():
         print("=================================================")
         print("Log - [", id, "] 계정으로 로그인 시도가 있었습니다.")
         print("=================================================")
+        #로그인 유저의 정보를 터미널에 나타냄(추후 로그파일 추가 예정)
 
         if not data:
             conn.commit()
@@ -89,9 +95,9 @@ def login_enter():
             conn.close()
             return "로그인에 실패하였습니다."
         
-    return render_template('login-enter.html')
+    return render_template('login_enter.html')
 
-@app.route("/join-membership", methods=['GET', 'POST']) #회원가입 페이지
+@app.route("/join_membership", methods=['GET', 'POST']) #회원가입 페이지
 def join_membership():
     if request.method == 'POST':
         #https://yong0810.tistory.com/4 참고 자료
@@ -117,7 +123,7 @@ def join_membership():
             curs.close()
             conn.close()
             return "회원가입 실패"
-    return render_template("join-membership.html")
+    return render_template("join_membership.html")
 
 if __name__ == "__main__":  #“지금 이 파일이 직접 실행되고 있는 거라면, 아래 코드를 실행해라.”
     app.run(debug=True)   #조건이 참일 때 실행할 코드임

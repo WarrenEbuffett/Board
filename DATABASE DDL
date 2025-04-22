@@ -1,8 +1,20 @@
-CREATE TABLE Customers (
+CREATE TABLE customers (
     CustomerID INT AUTO_INCREMENT PRIMARY KEY,
     Username VARCHAR(50) NOT NULL,
     Gender ENUM('Male', 'Female') NOT NULL,
     LoginID VARCHAR(20) NOT NULL,
     Password VARCHAR(255) NOT NULL,
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE board (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(100) NOT NULL,
+    content TEXT NOT NULL,
+    customer_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    view_count INT DEFAULT 0,
+    secret_yn CHAR(1) NOT NULL DEFAULT 'N',
+    FOREIGN KEY (customer_id) REFERENCES customers(CustomerID) ON DELETE CASCADE,
+    CONSTRAINT chk_secret CHECK (secret_yn IN ('Y', 'N'))
 );

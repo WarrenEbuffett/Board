@@ -11,7 +11,7 @@ mysql = MySQL()
 app = Flask(__name__)
  
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = '1004'
+app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
 app.config['MYSQL_DATABASE_DB'] = 'study_db'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.secret_key = "ABCDEFG"
@@ -55,11 +55,43 @@ def test():
     conn.close()
     return render_template('test.html', value=rows)
 
-@app.route('/login-enter') # 로그인 페이지
+@app.route('/login-enter', methods=['GET', 'POST']) # 로그인 페이지
 def login_enter():
+    if request.method == 'POST':
+        #html파일 속 name값을 가져옴
+        id = request.form['id']
+        pw = request.form['pw']
+
+        conn = mysql.connect()
+        curs = conn.cursor()
+        sql = "SELECT * FROM Customers WHERE LoginId = ('%s')" % (id)
+        curs.execute(sql)
+        data = curs.fetchall()
+
+        print("=================================================")
+        print("Log - [", id, "] 계정으로 로그인 시도가 있었습니다.")
+        print("=================================================")
+
+        if not data:
+            conn.commit()
+            curs.close()
+            conn.close()
+            return "존재하지 않은 계정입니다!"
+
+        if (data[0][4]) == pw :
+            conn.commit()
+            curs.close()
+            conn.close()
+            return "로그인에 성공하였습니다."
+        else :
+            conn.commit()
+            curs.close()
+            conn.close()
+            return "로그인에 실패하였습니다."
+        
     return render_template('login-enter.html')
 
-@app.route("/join-membership" , methods=['GET', 'POST']) #회원가입 페이지
+@app.route("/join-membership", methods=['GET', 'POST']) #회원가입 페이지
 def join_membership():
     if request.method == 'POST':
         #https://yong0810.tistory.com/4 참고 자료
@@ -79,7 +111,7 @@ def join_membership():
             conn.commit()
             curs.close()
             conn.close()
-            return "회원가입 성공!"
+            return "회원가입 성공"
         else:
             conn.rollback()
             curs.close()

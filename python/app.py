@@ -5,7 +5,7 @@
 #실행 중인 현재 파일의 이름"**을 Flask에게 알려주는 역할을 해요.
 
 from flask import Flask, render_template, request, url_for, redirect
-from flaskext.mysql import MySQL
+from flask_mysqldb import MySQL
 
 mysql = MySQL()
 app = Flask(__name__)

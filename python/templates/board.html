@@ -1,24 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>게시판</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>게시판</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+    }
+    th {
+      background-color: #eaeaea;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
 </head>
 <body>
-    <h1>게시판</h1>
-    <p>작업중입니다</p>
-    {% for value in values %}
-    <tr>
-        <td>{{ value[0] }}</td><br>
-        <td>{{ value[1] }}</td><br>
-        <td>{{ value[2] }}</td><br>
-        <td>{{ value[3] }}</td><br>
-        <td>{{ value[4] }}</td><br>
-        <td>{{ value[5] }}</td><br>
-        <td>{{ value[6] }}</td><br>
-        <td>{{ value[7] }}</td><br>
-    </tr>
-    {% endfor %}
+  <h1>게시판</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>작성자</th>
+        <th>제목</th>
+        <th>내용</th>
+        <th>날짜</th>
+        <th>조회수</th>
+        <th>카테고리</th>
+        <th>기타</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for value in values %}
+      <tr>
+        <td>{{ value[0] }}</td>
+        <td>{{ value[1] }}</td>
+        <td>{{ value[2] }}</td>
+        <td>{{ value[3] }}</td>
+        <td>{{ value[4] }}</td>
+        <td>{{ value[5] }}</td>
+        <td>{{ value[6] }}</td>
+        <td>{{ value[7] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </body>
 </html>

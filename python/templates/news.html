@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>뉴스 로고 목록</title>
+  <style>
+    .logo-container {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr); /* 6칸짜리 그리드 */
+      gap: 20px; /* 로고 사이 간격 */
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #eee;
+      padding: 10px;
+      height: 80px; /* 높이 고정 (필요 시) */
+      background-color: white;
+    }
+
+    .logo-box img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<div class="logo-container">
+  <div class="logo-box"><img src="herald.png" alt="헤럴드경제"></div>
+  <div class="logo-box"><img src="donga.png" alt="동아일보"></div>
+  <div class="logo-box"><img src="mediaus.png" alt="미디어오늘"></div>
+  <div class="logo-box"><img src="seoul.png" alt="서울신문"></div>
+  <div class="logo-box"><img src="zdnet.png" alt="ZDNET Korea"></div>
+  <div class="logo-box"><img src="jiji.png" alt="JIJI.COM"></div>
+  <!-- 계속 추가 -->
+</div>
+
+</body>
+</html>

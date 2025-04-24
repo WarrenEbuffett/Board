@@ -4,7 +4,7 @@
 #Flask(__name__) : 지금 이 파일을 Flask 앱으로 등록한다 라는 뜻이에요.
 #실행 중인 현재 파일의 이름"**을 Flask에게 알려주는 역할을 해요.
 
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, session, url_for, redirect
 from flaskext.mysql import MySQL
 
 mysql = MySQL()
@@ -14,7 +14,7 @@ app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
 app.config['MYSQL_DATABASE_DB'] = 'study_db'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.secret_key = "ABCDEFG"
+app.secret_key = "secret123"
 mysql.init_app(app)
 
 """

@@ -52,6 +52,11 @@ def board():
     data = curs.fetchall()
     return render_template('board.html', values=data)
 
+@app.route('/news')
+def news():
+    return render_template('news.html')
+
+
 @app.route('/login_enter', methods=['GET', 'POST']) # 로그인 페이지
 def login_enter():
     if request.method == 'POST':

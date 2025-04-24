@@ -105,15 +105,44 @@ header .inner .bottom-box .bottom li a{
   }
   
   /* 원하는 높이 설정 가능  */
-  .main-div1 { height: 300px; }
-  .main-div2 { height: 200px; }
-  .main-div3 { height: 400px; }
-  .main-div4 { height: 700px; }
-  .main-div5 { height: 100px; }
+  .main-div1 { height: 330px; }
+  .main-div2 { height: 250px; }
+  .main-div3 { height: auto; }
+  .main-div4 { height: 690px; }
+  .main-div5 { height: 150px; }
   
 
   footer{
     width: 100%;
     height:auto;
     background: #f0f0f001;
+  }
+
+  .logo-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6칸짜리 그리드 */
+    gap: 20px; /* 로고 사이 간격 */
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .logo-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #eee;
+    padding: 5px;
+    height: 80px; /* 높이 고정 (필요 시) */
+    background-color: white;
+  }
+
+  .logo-box img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .news-title{
+    font-weight:1000;
+    font-size:30px;
   }

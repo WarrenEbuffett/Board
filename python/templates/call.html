@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Page</title>
+
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='call.css') }}">
+  <script src="https://kit.fontawesome.com/fe4afa1b9f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+  <div class="container">
+    <!-- 프로필 카드 1 -->
+    <div class="profile-card">
+      <a href="index2-call-profile.html">
+        <img class="profile-img" src="{{ url_for('static', filename='images/naruto.png') }}" alt="프로필 사진" />
+      </a>
+      <h1 class="name">원성문</h1>
+      <p class="job">백엔드 개발자</p>
+      <!--fa-solid fa-phone :전화아이콘        fa-solid fa-envelope : 문자아이콘-->
+      <a class="social-a s1" href="tel:010-6249-8150"><i class="fa-solid fa-phone icon-call"></i></a>
+      <a class="social-a s1" href="mailto:artful_tittle.0o@icloud.com"><i class="fa-solid fa-envelope icon-email"></i></a>
+      <a class="social-a s1" href="https://github.com/WarrenEbuffett" target="_blank"><span class="icon-GitHub">Github</span></a>
+    </div>
+
+    <!-- 프로필 카드 2 -->
+    <div class="profile-card">
+      <a href="index2-call-profile.html">
+        <img class="profile-img" src="{{ url_for('static', filename='images/naruto.png') }}" alt="프로필 사진" />
+      </a>
+      <h1 class="name">이희륜</h1>
+      <p class="job">프론트엔드 개발자</p>
+
+      <a class="social-a s1" href="tel:010-6249-8150"><i class="fa-solid fa-phone icon-call"></i></a>
+      <a class="social-a s1" href="mailto:artful_tittle.0o@icloud.com"><i class="fa-solid fa-envelope icon-email"></i></a>
+      <a class="social-a s1" href="https://github.com/WarrenEbuffett" target="_blank"><span class="icon-GitHub">Github</span></a>
+    </div>
+  </div>
+
+</body>
+</html>

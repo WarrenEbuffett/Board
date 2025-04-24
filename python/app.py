@@ -56,6 +56,11 @@ def board():
 def news():
     return render_template('news.html')
 
+@app.route("/call")
+def call():
+    return render_template("call.html")
+
+
 
 @app.route('/login_enter', methods=['GET', 'POST']) # 로그인 페이지
 def login_enter():

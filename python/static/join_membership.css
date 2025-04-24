@@ -1,0 +1,44 @@
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing:border-box;
+}
+
+ol,ul,li{
+    list-style:none;
+
+}
+
+a, a:link, a:visiter{
+    color:inherit;
+}
+
+body{
+    width: 100%;
+    height:100vh;
+    background-color:rgb(235, 235, 235);
+}
+
+.body-box{
+    height:100vh;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+}
+
+.form-group{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-container{
+    width:340px;
+    height:400px;
+    text-align:center;
+    background:rgb(255, 255, 255);
+    padding: 25px 35px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}

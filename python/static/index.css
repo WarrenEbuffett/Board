@@ -9,6 +9,15 @@ ol,ul,li{
 
 }
 
+.top{
+  position:relative;
+
+}
+
+.login-out {
+  white-space: nowrap;  /* 줄바꿈 방지 */
+  display: inline-block;
+}
 a, a:visited, a:link{
     color:inherit;
     text-decoration: none;
@@ -21,7 +30,7 @@ body{
 
 header{
     width:100%;
-    height:160px;
+    height:auto;
     background:white;
     text-align:center;
     padding:20px 10px;
@@ -29,12 +38,16 @@ header{
 
 }
 
+
 header .header-inner{
+   
     display:flex;
     flex-direction:column;
     justify-content:center;
+   
     
 }
+
 
 header .header-inner h1{
     font-size:40px;
@@ -146,3 +159,14 @@ header .inner .bottom-box .bottom li a{
     font-weight:1000;
     font-size:30px;
   }
+
+  .image-set {
+    display: none;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .image-set.active {
+    display: flex;
+  }
+  

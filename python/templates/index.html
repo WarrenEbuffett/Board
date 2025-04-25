@@ -12,6 +12,8 @@
         Flask 내부적으로 static 경로를 처리할 때
         filename이라는 이름으로 static 폴더 안에서 찾을 파일 경로를 지정하게 되어 있어요.
     -->
+    <script defer src="{{ url_for('static', filename='index.js') }}"></script>
+
 </head>
 
 <body>
@@ -20,7 +22,7 @@
             <h1><a href="">Portfolio - mini</a></h1> <!--사이트 제목-->
             <br>
             {% if username %}
-            <h1>{{ username }}님 환영합니다!</h1>
+            <h1 class="header-h1-2">{{ username }}님</h1>
             {% endif %}
 
             <div class="top-box">
@@ -30,8 +32,8 @@
                 <li><a href="{{ url_for('join_membership') }}">회원가입</a></li>
                 {% endif %}
                 {% if username %}
-                <br>
-                <li><a href="{{ url_for('logout') }}">로그아웃</a></li>
+                
+                <li class="login-out-box"><a class="login-out" href="{{ url_for('logout') }}">로그아웃</a></li>
                 {% endif %}
             </ul>
             </div>
@@ -99,11 +101,33 @@
     <div class="main-div5">5번칸</div>
   </div>
 
-  <!-- 오른쪽 열 -->
-  <div class="right-column">
-    <div class="main-div2">2번칸 -미니 게시판판 </div>
-    <div class="main-div4">4번칸 </div>
+<!-- 오른쪽 열 -->
+<div class="main-div2">
+    2번칸 -미니 게시판판
+    <div class="image-set active">
+      <div class="logo-box"><img src="{{ url_for('static', filename='images/new1.png') }}" alt=""></div>
+      <div class="logo-box"><img src="{{ url_for('static', filename='images/new2.png') }}" alt=""></div>
+    </div>
+    <div class="image-set">
+      <div class="logo-box"><img src="{{ url_for('static', filename='images/new3.png') }}" alt=""></div>
+      <div class="logo-box"><img src="{{ url_for('static', filename='images/new4.png') }}" alt=""></div>
+    </div>
+    <div class="image-set">
+      <div class="logo-box"><img src="{{ url_for('static', filename='images/new5.png') }}" alt=""></div>
+      <div class="logo-box"><img src="{{ url_for('static', filename='images/new6.png') }}" alt=""></div>
+    </div>
+    <div class="image-set">
+        <div class="logo-box"><img src="{{ url_for('static', filename='images/new1.png') }}" alt=""></div>
+        <div class="logo-box"><img src="{{ url_for('static', filename='images/new2.png') }}" alt=""></div>
+      </div>
+      <div class="image-set">
+        <div class="logo-box"><img src="{{ url_for('static', filename='images/new3.png') }}" alt=""></div>
+        <div class="logo-box"><img src="{{ url_for('static', filename='images/new4.png') }}" alt=""></div>
+      </div>
   </div>
+    <div class="main-div4">4번칸</div>
+  </div>
+
 </div>
 
 

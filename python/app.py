@@ -4,8 +4,14 @@
 #Flask(__name__) : 지금 이 파일을 Flask 앱으로 등록한다 라는 뜻이에요.
 #실행 중인 현재 파일의 이름"**을 Flask에게 알려주는 역할을 해요.
 
+<<<<<<< HEAD
 from flask import Flask, render_template, request, url_for, redirect
 from flask_mysqldb import MySQL  #flaskext.mysql이게 안되서 flask_mysqldb이걸로 잠시 수정
+=======
+from flask import Flask, render_template, request, session, url_for, redirect
+from flaskext.mysql import MySQL
+#from datetime import timedelta
+>>>>>>> e6612f065214d44e63d465761d383e38a2d99955
 
 mysql = MySQL()
 app = Flask(__name__)
@@ -14,7 +20,8 @@ app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
 app.config['MYSQL_DATABASE_DB'] = 'study_db'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.secret_key = "ABCDEFG"
+app.secret_key = "secret123"
+#app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
 mysql.init_app(app)
 
 """
@@ -34,7 +41,18 @@ conn = pymysql.connect(  #pymysql : Python이 MySQL 서버와 통신할 수 있�
 @app.route("/") # 메인 페이지
 #이건 사용자 브라우저에서 어떤 URL로 접속했을 때 어떤 페이지(함수)가 실행될지를 정하는 부분입니다.
 def home(): #사용자가 /에 접속했을 때 실행될 함수 이름입니다. / 이름 마음대로 가능 /💡함수 이름은 중복되면 안 됨
-    return render_template('index.html') #Flask가 templates 폴더 안에 있는 index.html 파일을 찾아서,그걸 사용자에게 보여줍니다.
+    if 'userid' in session:
+        userid = session.get('userid')
+        conn = mysql.connect()
+        curs = conn.cursor()
+        sql = "SELECT * FROM customers WHERE customerid = ('%s')" % (userid)
+        curs.execute(sql)
+        userinfo = curs.fetchall()
+        return render_template('index.html', username=userinfo[0][1]) 
+    else:
+        return render_template('index.html')
+
+         #Flask가 templates 폴더 안에 있는 index.html 파일을 찾아서,그걸 사용자에게 보여줍니다.
         #render(함수)_template(폴더)("index.html(파일)")"
         #render: Flask에서 HTML 파일을 브라우저에 보여줄 때 쓰는 함수예요. "렌더링하다", 즉 HTML을 브라우저가 볼 수 있게 바꿔주는 것
 
@@ -92,6 +110,8 @@ def login_enter():
             conn.commit()
             curs.close()
             conn.close()
+            session['userid'] = data[0][0]  # 세션에 사용자 정보 저장
+            session.permanent = True
             return "로그인에 성공하였습니다."
         else :
             conn.commit()
@@ -100,6 +120,11 @@ def login_enter():
             return "로그인에 실패하였습니다."
         
     return render_template('login_enter.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('userid', None)
+    return render_template('index.html')
 
 @app.route("/join_membership", methods=['GET', 'POST']) #회원가입 페이지
 def join_membership():

@@ -3,7 +3,7 @@
 
 #Flask(__name__) : 지금 이 파일을 Flask 앱으로 등록한다 라는 뜻이에요.
 #실행 중인 현재 파일의 이름"**을 Flask에게 알려주는 역할을 해요.
-from flask import Flask, render_template, request, session, url_for, redirect
+from flask import Flask, render_template, request, session, url_for, redirect, flash
 from flaskext.mysql import MySQL
 #from datetime import timedelta
 
@@ -107,7 +107,9 @@ def login_enter():
             conn.commit()
             curs.close()
             conn.close()
-            return "로그인에 실패하였습니다."
+            flash('로그인 실패 : 아이디 또는 비밀번호를 확인하세요', 'error')
+            return render_template('login_enter.html')
+            # return "로그인에 실패하였습니다."
         
     return render_template('login_enter.html')
 

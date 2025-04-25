@@ -12,6 +12,13 @@
 
   <!-- ✅ Flask 방식: static 폴더에서 JS 불러오기 -->
   <script defer src="{{ url_for('static', filename='login-enter.js') }}"></script>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      alert("{{ messages[0] }}");
+    </script>
+  {% endif %}
+  {% endwith %}
 </head>
 
 <body>
@@ -46,6 +53,7 @@
           <span>구글계정으로 시작하기</span>
         </a>
       </div>
+      
 
       <!-- 회원가입 페이지도 url_for로 이동 -->
       <button class="join-membership">

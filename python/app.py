@@ -14,8 +14,8 @@ app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
 app.config['MYSQL_DATABASE_DB'] = 'study_db'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.secret_key = "secret123"
-#app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
+app.secret_key = "secret123" #암호키
+#app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1) 세션 유지 시간
 mysql.init_app(app)
 
 """
@@ -36,7 +36,7 @@ conn = pymysql.connect(  #pymysql : Python이 MySQL 서버와 통신할 수 있�
 #이건 사용자 브라우저에서 어떤 URL로 접속했을 때 어떤 페이지(함수)가 실행될지를 정하는 부분입니다.
 def home(): #사용자가 /에 접속했을 때 실행될 함수 이름입니다. / 이름 마음대로 가능 /💡함수 이름은 중복되면 안 됨
     if 'userid' in session:
-        userid = session.get('userid')
+        userid = session.get('userid') # 세션 값 가져오기
         conn = mysql.connect()
         curs = conn.cursor()
         sql = "SELECT * FROM customers WHERE customerid = ('%s')" % (userid)
@@ -111,12 +111,12 @@ def login_enter():
         
     return render_template('login_enter.html')
 
-@app.route('/logout')
+@app.route('/logout') # 로그아웃 기능
 def logout():
     session.pop('userid', None)
     return redirect(url_for('home'))
 
-@app.route("/join_membership", methods=['GET', 'POST']) #회원가입 페이지
+@app.route("/join_membership", methods=['GET', 'POST']) # 회원가입 페이지
 def join_membership():
     if request.method == 'POST':
         #https://yong0810.tistory.com/4 참고 자료

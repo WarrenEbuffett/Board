@@ -102,7 +102,7 @@ def login_enter():
             conn.close()
             session['userid'] = data[0][0]  # 세션에 사용자 정보 저장
             session.permanent = True
-            return "로그인에 성공하였습니다."
+            return redirect(url_for('home'))
         else :
             conn.commit()
             curs.close()
@@ -114,7 +114,7 @@ def login_enter():
 @app.route('/logout')
 def logout():
     session.pop('userid', None)
-    return render_template('index.html')
+    return redirect(url_for('home'))
 
 @app.route("/join_membership", methods=['GET', 'POST']) #회원가입 페이지
 def join_membership():

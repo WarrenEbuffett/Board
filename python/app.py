@@ -135,7 +135,6 @@ def join_membership():
             sql = "INSERT INTO customers (username, gender, loginid, password)\
             VALUES ('%s', '%s', '%s', '%s')" % (name, gender, id, pw)
             curs.execute(sql)
-            data = curs.fetchall()
         except Exception as e:
             curs.close()
             conn.close()

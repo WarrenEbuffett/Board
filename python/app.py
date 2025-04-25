@@ -3,15 +3,9 @@
 
 #Flask(__name__) : 지금 이 파일을 Flask 앱으로 등록한다 라는 뜻이에요.
 #실행 중인 현재 파일의 이름"**을 Flask에게 알려주는 역할을 해요.
-
-<<<<<<< HEAD
-from flask import Flask, render_template, request, url_for, redirect
-from flask_mysqldb import MySQL  #flaskext.mysql이게 안되서 flask_mysqldb이걸로 잠시 수정
-=======
 from flask import Flask, render_template, request, session, url_for, redirect
 from flaskext.mysql import MySQL
 #from datetime import timedelta
->>>>>>> e6612f065214d44e63d465761d383e38a2d99955
 
 mysql = MySQL()
 app = Flask(__name__)
@@ -69,10 +63,6 @@ def board():
     curs.execute(sql)
     data = curs.fetchall()
     return render_template('board.html', values=data)
-
-@app.route("/")
-def index():
-    return render_template("index.html")
     
 @app.route('/news')
 def news():

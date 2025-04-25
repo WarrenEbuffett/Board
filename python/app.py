@@ -5,7 +5,7 @@
 #실행 중인 현재 파일의 이름"**을 Flask에게 알려주는 역할을 해요.
 
 from flask import Flask, render_template, request, url_for, redirect
-from flaskext.mysql import MySQL
+from flask_mysqldb import MySQL  #flaskext.mysql이게 안되서 flask_mysqldb이걸로 잠시 수정
 
 mysql = MySQL()
 app = Flask(__name__)
@@ -52,6 +52,10 @@ def board():
     data = curs.fetchall()
     return render_template('board.html', values=data)
 
+@app.route("/")
+def index():
+    return render_template("index.html")
+    
 @app.route('/news')
 def news():
     return render_template('news.html')

@@ -131,21 +131,20 @@ def join_membership():
 
         conn = mysql.connect()
         curs = conn.cursor()
-        sql = "INSERT INTO customers (username, gender, loginid, password)\
-                VALUES ('%s', '%s', '%s', '%s')" % (name, gender, id, pw)
-        curs.execute(sql)
-        data = curs.fetchall()
-        if not data:
-            conn.commit()
+        try:
+            sql = "INSERT INTO customers (username, gender, loginid, password)\
+            VALUES ('%s', '%s', '%s', '%s')" % (name, gender, id, pw)
+            curs.execute(sql)
+            data = curs.fetchall()
+        except Exception as e:
             curs.close()
             conn.close()
-            flash('회원가입에 성공하였습니다.', 'error')
-            return redirect(url_for('home'))
-        else:
-            conn.rollback()
-            curs.close()
-            conn.close()
-            return "회원가입 실패"
+            return "에러가 발생했습니다."
+        conn.commit()
+        curs.close()
+        conn.close()
+        flash('회원가입에 성공하였습니다.', 'error')
+        return redirect(url_for('home'))
     return render_template("join_membership.html")
 
 @app.route('/test')  # 테스트 코드

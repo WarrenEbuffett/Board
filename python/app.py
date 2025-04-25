@@ -94,7 +94,8 @@ def login_enter():
             conn.commit()
             curs.close()
             conn.close()
-            return "존재하지 않은 계정입니다!"
+            flash('로그인 실패 : 존재하지 않는 계정입니다.', 'error')
+            return render_template('login_enter.html')
 
         if (data[0][4]) == pw :
             conn.commit()
@@ -107,7 +108,7 @@ def login_enter():
             conn.commit()
             curs.close()
             conn.close()
-            flash('로그인 실패 : 아이디 또는 비밀번호를 확인하세요', 'error')
+            flash('로그인 실패 : 비밀번호를 확인하세요.', 'error')
             return render_template('login_enter.html')
             # return "로그인에 실패하였습니다."
         

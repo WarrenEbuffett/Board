@@ -172,5 +172,4 @@ if __name__ == "__main__":  #“지금 이 파일이 직접 실행되고 있는 
 #상황	                                        __name__ 값
 #터미널에서 직접 실행할 때 (예: python app.py)	  "__main__"
 #다른 파일에서 import 될 때 (예: import app)	    "app"
-#
 #python app.py : 이렇게 직접 실행했을 때만 아래 코드(app.run(...))를 실행하겠다는 뜻이에요.

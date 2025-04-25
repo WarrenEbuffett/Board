@@ -139,7 +139,8 @@ def join_membership():
             conn.commit()
             curs.close()
             conn.close()
-            return "회원가입 성공"
+            flash('회원가입에 성공하였습니다.', 'error')
+            return redirect(url_for('home'))
         else:
             conn.rollback()
             curs.close()

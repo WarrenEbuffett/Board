@@ -36,6 +36,9 @@
   <h1>게시판</h1>
   <div>
     <a href="/">홈</a>
+    {% if userinfo %}
+    <a href="">글 등록</a>
+    {% endif %}
   </div>
   <table>
     <thead>

@@ -62,7 +62,15 @@ def board():
     sql = "SELECT * FROM board"
     curs.execute(sql)
     data = curs.fetchall()
-    return render_template('board.html', values=data)
+
+    userid = session.get('userid') # 세션 값 가져오기
+    conn = mysql.connect()
+    curs = conn.cursor()
+    sql = "SELECT * FROM customers WHERE customerid = ('%s')" % (userid)
+    curs.execute(sql)
+    userinfo = curs.fetchall()
+
+    return render_template('board.html', values=data, userinfo=userinfo)
     
 @app.route('/news')
 def news():

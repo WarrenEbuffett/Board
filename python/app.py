@@ -18,6 +18,15 @@ app.secret_key = "secret123" #암호키
 #app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1) 세션 유지 시간
 mysql.init_app(app)
 
+def br_userinfo(): #유저 정보 가져오기
+    userid = session.get('userid') # 세션 값 가져오기
+    conn = mysql.connect()
+    curs = conn.cursor()
+    sql = "SELECT * FROM customers WHERE customerid = ('%s')" % (userid)
+    curs.execute(sql)
+    userinfo = curs.fetchall()
+    return userinfo
+
 """
 기존 데이터베이스 연결 코드
 app = Flask(__name__) #Flask 앱을 하나 만들어서, 여기에 라우팅, 데이터 처리, 렌더링 같은 기능을 추가할 준비를 해놓는 코드입니다.
@@ -36,12 +45,7 @@ conn = pymysql.connect(  #pymysql : Python이 MySQL 서버와 통신할 수 있�
 #이건 사용자 브라우저에서 어떤 URL로 접속했을 때 어떤 페이지(함수)가 실행될지를 정하는 부분입니다.
 def home(): #사용자가 /에 접속했을 때 실행될 함수 이름입니다. / 이름 마음대로 가능 /💡함수 이름은 중복되면 안 됨
     if 'userid' in session:
-        userid = session.get('userid') # 세션 값 가져오기
-        conn = mysql.connect()
-        curs = conn.cursor()
-        sql = "SELECT * FROM customers WHERE customerid = ('%s')" % (userid)
-        curs.execute(sql)
-        userinfo = curs.fetchall()
+        userinfo = br_userinfo()
         return render_template('index.html', username=userinfo[0][1]) 
     else:
         return render_template('index.html')
@@ -63,14 +67,11 @@ def board():
     curs.execute(sql)
     data = curs.fetchall()
 
-    userid = session.get('userid') # 세션 값 가져오기
-    conn = mysql.connect()
-    curs = conn.cursor()
-    sql = "SELECT * FROM customers WHERE customerid = ('%s')" % (userid)
-    curs.execute(sql)
-    userinfo = curs.fetchall()
-
-    return render_template('board.html', values=data, userinfo=userinfo)
+    if 'userid' in session:
+        userinfo = br_userinfo()
+        return render_template('board.html', values=data, userinfo=userinfo)
+    else :
+        return render_template('board.html', values=data)
     
 @app.route('/news')
 def news():

@@ -138,7 +138,8 @@ def join_membership():
         except Exception as e:
             curs.close()
             conn.close()
-            return "에러가 발생했습니다."
+            flash('회원가입에 실패하였습니다.', 'error')
+            return redirect(url_for('join_membership'))
         conn.commit()
         curs.close()
         conn.close()

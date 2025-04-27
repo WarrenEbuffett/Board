@@ -7,6 +7,13 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='join_membership.css') }}">
   <script src="https://kit.fontawesome.com/fe4afa1b9f.js" crossorigin="anonymous"></script>
   <script defer src="{{ url_for('static', filename='login-enter.js') }}"></script>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      alert("{{ messages[0] }}");
+    </script>
+  {% endif %}
+  {% endwith %}
 </head>
 <body>
 

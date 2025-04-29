@@ -73,6 +73,10 @@ def board():
     else :
         return render_template('board.html', values=data)
     
+@app.route('/writing')
+def writing():
+    return render_template('writing.html')
+    
 @app.route('/news')
 def news():
     return render_template('news.html')

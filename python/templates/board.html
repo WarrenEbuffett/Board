@@ -31,6 +31,13 @@
       background-color: #f1f1f1;
     }
   </style>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <script>
+      alert("{{ messages[0] }}");
+  </script>
+  {% endif %}
+  {% endwith %}
 </head>
 <body>
   <h1>게시판</h1>

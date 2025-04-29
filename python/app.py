@@ -73,9 +73,33 @@ def board():
     else :
         return render_template('board.html', values=data)
     
-@app.route('/writing')
+@app.route('/writing', methods=['GET', 'POST']) #글 등록 페이지
 def writing():
-    return render_template('writing.html')
+    userinfo = br_userinfo()
+    if request.method == 'POST':
+        #html파일 속 name값을 가져옴
+        title = request.form['title']
+        content = request.form['content']
+        customerid = request.form['customerid']
+        secret_yn = request.form.get('secret_yn', 'N')  # 값이 없으면 기본값 'N'
+
+        conn = mysql.connect()
+        curs = conn.cursor()
+        try:
+            sql = "INSERT INTO board (title, content, customerid, secret_yn)\
+            VALUES ('%s', '%s', '%s', '%s')" % (title, content, customerid, secret_yn)
+            curs.execute(sql)
+        except Exception as e:
+            curs.close()
+            conn.close()
+            flash('게시글 작성에 실패하였습니다.', 'error')
+            return redirect(url_for('board'))
+        conn.commit()
+        curs.close()
+        conn.close()
+        flash('게시글 작성에 성공하였습니다.', 'error')
+        return redirect(url_for('board'))
+    return render_template('writing.html', userinfo=userinfo)
     
 @app.route('/news')
 def news():
